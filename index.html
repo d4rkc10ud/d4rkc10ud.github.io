@@ -1,0 +1,134 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore Mazin Al-Quraini's cybersecurity CV in an interactive terminal.">
+<title>Mazin Al-Quraini | Cybersecurity Terminal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f3edff;--muted:#bdb0cf;--accent:#b78cff;--cyan:#67e8f9;--line:#493461;font-family:"Jersey 25",Consolas,ui-monospace,monospace;font-size:clamp(16px,1.65vw,19px)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#000;color:var(--ink);line-height:1.65}main{width:min(1000px,calc(100% - 32px));margin:clamp(24px,8vh,100px) auto}
+a{color:var(--cyan)}button,input{font:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.window{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#100a19;box-shadow:0 28px 100px #0008;animation:enter .55s ease-out both}
+.bar{display:flex;align-items:center;gap:12px;padding:12px 22px;background:#1b1228;border-bottom:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.dots{width:9px;height:9px;border-radius:50%;background:#fa8c88;box-shadow:15px 0 #f3c975,30px 0 #cba2ff;margin-right:34px}
+.body{padding:clamp(18px,5vw,54px)}.prompt,.category{color:var(--accent)}.category{font-size:.9rem;margin:0}.intro{max-width:68ch;color:var(--muted)}h1{font:400 clamp(2.35rem,7.5vw,5rem)/1.02 "Jersey 25",Consolas,monospace;letter-spacing:-.025em;margin:12px 0 18px}h2{font-size:1.2rem;margin:0 0 12px}h3{font-size:1rem;margin:16px 0 4px}p{margin:8px 0}
+.result{border-block:1px solid var(--line);padding:20px 0;overflow-wrap:anywhere}.result li+li{margin-top:4px}.result ul{padding-left:22px}.result.flash{animation:enter .28s ease-out both}
+form{margin-top:18px;display:flex;gap:10px;align-items:center}.cursor{width:.55em;height:1em;background:var(--accent);animation:blink 1.2s steps(2,start) infinite}.command{width:100%;min-width:0;background:transparent;border:0;color:var(--ink);padding:5px}.command::placeholder{color:var(--muted)}.hint{font-size:.82rem;color:var(--muted);margin-top:10px}
+details{margin-top:22px}summary{cursor:pointer;color:var(--accent)}section+section{margin-top:20px}
+@keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes blink{to{visibility:hidden}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.backdrop{position:fixed;inset:0;overflow:hidden;pointer-events:none;--pan-x:0px;--pan-y:0px;}
+main{position:relative}.window{background:#0d0813ed}.bar{background:#170f21}
+.category{font-size:.82rem;font-weight:600;letter-spacing:.11em}
+h1{color:#f4eaff;text-shadow:0 0 32px #ae67ff38}
+.intro{max-width:60ch}
+.result{background:#110b1a;border:1px solid var(--line);border-radius:10px;padding:clamp(14px,3vw,24px)}
+.result{margin-top:12px}.result:empty{display:none}
+.result h2{color:var(--accent)}
+.bar{justify-content:center;position:relative;font-size:.82rem}.dots{position:absolute;left:19px;margin:0}
+#prompt{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:0 10px;background:#08050e;border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.prompt-host{grid-column:1/-1;color:#a788cc;font-family:Consolas,monospace;font-size:.93rem;white-space:nowrap}
+.prompt-host strong{color:#dbbaff}.prompt-host b{color:#f3edff}.prompt{font-family:Consolas,monospace;font-weight:700;white-space:nowrap}
+.command{caret-color:var(--cyan)}.cursor{display:none}.command-echo{margin-top:18px;color:var(--accent);overflow-wrap:anywhere;font-size:.9rem}
+@media(max-width:380px){.bar{justify-content:flex-end}}
+.shortcuts{display:flex;align-items:center;flex-wrap:wrap;column-gap:clamp(14px,2.6vw,28px);row-gap:2px;margin:25px 0 18px;border-bottom:1px solid var(--line)}
+.shortcuts button{position:relative;appearance:none;border:0;background:transparent;color:var(--muted);padding:8px 0 10px;min-height:44px;cursor:pointer;font-size:.94rem;transition:color .18s ease}
+.shortcuts button::after{content:"";position:absolute;inset:auto 0 0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .18s ease}
+.shortcuts button:hover,.shortcuts button[aria-pressed="true"]{color:var(--ink)}
+.shortcuts button[aria-pressed="true"]::after{transform:scaleX(1)}
+:root{color-scheme:light;--ink:#18372a;--muted:#4d5e50;--accent:#276446;--cyan:#236047;--line:#d5c9ae}
+body{background:#f4ebd8}
+.window{background:#fffaf0f5;box-shadow:0 28px 85px #263b2526}
+.bar{background:#bee0c8}
+h1{color:#173b2b;text-shadow:none}
+.result{background:#faf2e3}
+#prompt{background:#f2ead7}
+.prompt-host{color:#476956}
+.prompt-host strong{color:var(--accent)}
+.prompt-host b{color:var(--ink)}
+@media (pointer:fine){
+  body{cursor:url("cursor-arrow.svg") 2 2,default}
+  a,button,summary{cursor:url("cursor-hand.svg") 8 2,pointer}
+  .command{cursor:text}
+}
+.window{background:#f5ead5;border-color:#bdb49d;border-radius:14px;box-shadow:0 24px 64px #223b2824,0 2px 6px #223b2814}
+.bar{justify-content:center;background:#ebddc1;border-bottom-color:#d1c1a2;color:#2f5141;min-height:44px;letter-spacing:.04em}
+.dots{background:#d95752;box-shadow:15px 0 #e1a12d,30px 0 #388d59}
+.body{padding:clamp(20px,5vw,52px)}
+.intro{max-width:63ch}
+#prompt{border-color:#c3cebb;background:#f0f4ea}
+.result{background:#fffdf7;border-color:#d5c9ae}
+.result section+section,#static-cv section+section{padding-top:18px;border-top:1px solid var(--line)}
+.result li+li,#static-cv li+li{margin-top:9px}
+.date{color:var(--muted);font-size:.9rem}
+.skill-list{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:12px 18px;margin:0}
+.skill-list dt{color:var(--accent)}.skill-list dd{margin:0}
+.shortcuts button[aria-pressed="true"]{color:var(--accent)}
+@media(max-width:480px){.skill-list{grid-template-columns:1fr;gap:2px}.skill-list dd+dt{margin-top:10px}}
+.hex-field{position:absolute;inset:-36px;transform:translate(var(--pan-x),var(--pan-y));transition:transform .24s ease-out}
+.hex-field span{position:absolute;left:var(--column);width:2ch;top:0;color:#285437;font:600 .8rem/1.65 Consolas,monospace;opacity:.35;animation:hex-fall var(--pace) linear var(--delay) infinite}
+.hex-field span::first-line{color:#173c27}
+@keyframes hex-fall{
+  from{transform:translateY(-100%)}
+  to{transform:translateY(calc(100vh + 72px))}
+}
+@media(prefers-reduced-motion:reduce){.hex-field{transform:none;transition:none}.hex-field span{animation:none;top:var(--column)}}
+#command-echo,#result{font-family:inherit;font-size:clamp(.78rem,1.7vw,.9rem);line-height:1.6;background:#f0f4ea;color:#254835}
+.command-echo{border:1px solid #c3cebb;border-bottom:0;border-radius:8px 8px 0 0;padding:10px 16px 0;font-weight:700;margin-bottom:0}
+.command-echo:not([hidden])+#result{margin-top:0;border-top:0;border-radius:0 0 8px 8px}
+#result{border-color:#c3cebb}
+.help-commands{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;margin:0}
+.help-commands dt{font-weight:700;color:#215e3e}.help-commands dd{margin:0}
+.cert-list{list-style:none;padding:0;margin:0}
+.cert-section .cert-list li{font-weight:400;margin:0;padding:9px 0}
+.cert-list li+li{border-top:1px solid var(--line)}
+</style>
+<script src="terminal.js" defer></script>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><div class="hex-field">
+  <span style="--column:4%;--pace:11s;--delay:-3s">4F A9 00 C2 71 1B 3D</span>
+  <span style="--column:12%;--pace:16s;--delay:-9s">01 DF 6A 18 F0 44 BE</span>
+  <span style="--column:23%;--pace:13s;--delay:-5s">9D 20 A8 0A 63 C4 FF</span>
+  <span style="--column:36%;--pace:17s;--delay:-12s">80 2B DD 7E 00 8C 53</span>
+  <span style="--column:50%;--pace:12s;--delay:-4s">AA 19 D7 42 E6 01 C3</span>
+  <span style="--column:64%;--pace:15s;--delay:-11s">7B 46 00 90 D2 AB 3A</span>
+  <span style="--column:77%;--pace:14s;--delay:-2s">2C 55 B9 0F 38 FF 87</span>
+  <span style="--column:87%;--pace:16s;--delay:-7s">10 AD 64 83 05 EF 91</span>
+  <span style="--column:96%;--pace:12s;--delay:-8s">C0 23 11 8B F2 70 2E</span>
+</div></div>
+<main>
+<div class="window">
+<div class="bar"><span class="dots" aria-hidden="true"></span><span>mazin@kali: ~</span></div>
+<div class="body">
+<p class="category">CYBERSECURITY ANALYST · OMAN</p>
+<h1>Mazin Al-Quraini</h1>
+<p class="intro">I'm a cybersecurity analyst, penetration tester, and red teamer. I help teams identify security weaknesses and improve their defenses through hands-on assessments. My experience also includes AI, cloud computing, programming, incident response, and digital forensics.</p>
+<div id="terminal" hidden>
+<nav class="shortcuts" aria-label="CV commands">
+<button type="button" data-command="about">about</button><button type="button" data-command="experience">experience</button><button type="button" data-command="projects">projects</button><button type="button" data-command="skills">skills</button><button type="button" data-command="certs">certs</button><button type="button" data-command="education">education</button><button type="button" data-command="contact">contact</button>
+</nav>
+
+<form id="prompt"><div class="prompt-host" aria-hidden="true"><span>┌──(</span><strong>mazin㉿kali</strong><span>)-[</span><b>~</b><span>]</span></div><label for="command" class="prompt" aria-label="Terminal command">└─$</label><input id="command" class="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type help and press Enter"><span class="cursor" aria-hidden="true"></span></form>
+<p class="hint">Use ↑ and ↓ to revisit commands.</p>
+<p id="command-echo" class="command-echo" hidden></p><div id="result" class="result" role="region" aria-label="Command output" aria-live="polite"></div>
+</div>
+<details id="static-cv" open>
+<summary>Read full CV</summary>
+<section id="about"><h2>About</h2><p>Based in Oman. My work covers forensic investigations, incident response and security assessments. I also develop CTF challenges and support cybersecurity community events.</p></section>
+<section id="experience"><h2>Experience</h2><h3>Cybersecurity Analyst</h3><p class="date">January 2020 to present</p><ul><li><strong>Red teaming and penetration testing.</strong> Led red team engagements and assessed systems for vulnerabilities.</li><li><strong>Detection and response.</strong> Worked with SOC teams to improve SIEM visibility and threat detection. Developed incident response procedures.</li><li><strong>Digital forensics.</strong> Investigated malware and insider-threat incidents and maintained forensic toolkits.</li><li><strong>Analyst development.</strong> Trained junior analysts and contributed to security awareness.</li></ul></section>
+<section id="projects"><h2>Projects and achievements</h2><h3>CTF Platform · 2025</h3><p>Founded a CTF platform and hosted its first competition in September 2025. Developed challenges in digital forensics, steganography, web security and OSINT.</p><h3>SOOR CTF · 2026</h3><p>My team placed third at SOOR 2026, working together to solve cybersecurity challenges during the competition.</p><h3>Defensive Cyber Marvel IV · 2025</h3><p>Represented Oman as a red team member during a multinational cyber exercise in the Republic of Korea and collaborated with international teams during the simulation.</p></section>
+<section id="skills"><h2>Technical skills</h2><dl class="skill-list"><dt>Security assessments</dt><dd>Red teaming, penetration testing, vulnerability assessment, Burp Suite and Nessus</dd><dt>Detection and incident response</dt><dd>Threat hunting, Elasticsearch SIEM, Wireshark, IDS/IPS and firewall management</dd><dt>Programming and platforms</dt><dd>Python, Bash, PowerShell, Linux, Windows Server, virtualization and Docker. My experience also includes AI and cloud computing.</dd><dt>Digital forensics</dt><dd>Disk and memory analysis, timeline analysis, malware analysis, chain of custody, Volatility, Autopsy and IDA Pro</dd></dl></section>
+<section id="certs" class="cert-section"><h2>Certifications and training</h2><ul class="cert-list"><li>Web Application Penetration Tester (eWPT) · INE Security · 2026</li><li>Web Application Penetration Tester eXtreme (eWPTX) · INE Security · 2026</li><li>Certified Red Team Infrastructure Developer (CRT-ID) · CyberWarFare Labs · 2026</li><li>Certified Red Team Analyst (CRTA) · CyberWarFare Labs · Oct 2025</li><li>Certified Professional Penetration Tester (eCPPT) · INE Security · Oct 2025</li><li>Penetration Testing Level 1 (PT1) · TryHackMe · Aug 2025</li><li>Advanced Cybersecurity Academy · UTAS · 2022–2025</li><li>Certified Incident Handler (ECIH) · EC-Council · Nov 2024</li><li>Junior Penetration Tester (eJPT) · INE Security · Oct 2024</li><li>Certified Cloud Associate (ICCA) · INE · Oct 2024</li><li>Hands-On Hacking Advanced (HOHA) · Clarified Security · Jan 2024</li><li>Hands-On Hacking Essentials (HOHE) · Clarified Security · Nov 2023</li><li>Advanced Digital Forensics · ICSI · Dec 2022</li></ul></section>
+<section id="education"><h2>Education and languages</h2><p>Higher Diploma in Networking, Shinas College of Technology, Oman · 2018</p><p>Arabic (native) and English (fluent)</p></section>
+<section id="contact"><h2>Contact</h2><p><a href="https://www.linkedin.com/in/mazin-alquraini/">Connect on LinkedIn</a></p></section>
+</details>
+</div>
+</div>
+</main>
+</body>
+</html>
